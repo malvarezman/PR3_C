@@ -85,14 +85,13 @@ void supportersTableLoad(tSupporterTable *tabSupporters, const char* filename, t
 		*retVal = ERR_CANNOT_READ;
 	}	
 }
-
 /* Write a table supporters */
 void writeTabSupporters(tSupporterTable tabSupporters) {
 	int i;
 	printf("ID NAME           AGE\n");
 	printf("=====================\n");				
 	for (i = 0; i < tabSupporters.nSupporters; i++){
-		printf("%-2d %-15s %2d\n",tabSupporters.table[i].id, tabSupporters.table[i].name, tabSupporters.table[i].age);			
+		printf("%2d %-15s %2d\n",tabSupporters.table[i].id, tabSupporters.table[i].name, tabSupporters.table[i].age);			
 	}	
 	printf("\n");
 }
@@ -123,25 +122,19 @@ void supporterTableInit(tSupporterTable *tabSupporters)
 {
     /* Empty table, no supporters*/
     tabSupporters->nSupporters = 0;
-    
-    for (int i = 0; i < MAX_SUPPORTERS; i++) {
-        tabSupporters->table[i].id = 0;   
-        tabSupporters->table[i].age = 0;  
-        tabSupporters->table[i].membershipYears = 0;
-    }
 }
 
 /* Exercise 2.2 */
-void supporterTableAdd(tSupporterTable *tabSupporters, tSupporter supporter, tError *retVal) {	
-    
-    if (tabSupporters->nSupporters >= MAX_SUPPORTERS){
-        *retVal = -2;
-        printf("%d",*retVal);
+void supporterTableAdd(tSupporterTable *tabSupporters, tSupporter supporter, tError *retVal) 
+{
+    /* Check if there is enough space in the table */
+    if (tabSupporters->nSupporters >= MAX_SUPPORTERS) {
+        *retVal = ERR_MEMORY;  // No space in the table
     } else {
-        tabSupporters->table[tabSupporters->nSupporters] = supporter;
-        tabSupporters->nSupporters ++;
-        *retVal = 0;
-        printf("%d",*retVal);
+        /* Add the new supporter to the end of the table */
+        supporterCpy(&tabSupporters->table[tabSupporters->nSupporters], supporter);
+        tabSupporters->nSupporters++;
+        *retVal = OK;  // Successful insertion
     }
 }
 
@@ -157,7 +150,9 @@ float averageSpendingByEvent (tSupporter supporter, tEventType eventType) {
             eventTickets++;
         }
     }
+    if (eventTickets != 0){
     avgSpending = avgSpending / eventTickets;
+    }
     
 	return avgSpending;
 }

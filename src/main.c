@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 		/* Show supporters list loaded */
 		writeTabSupporters(tabSupporters);    }
     else {
-        printf("NO SUPPORTERS RECOVERED");
+        printf("NO SUPPORTER RECOVERED");
         return 0;
     }
 		/* Exercise 2.5 */
@@ -42,13 +42,13 @@ int main(int argc, char **argv)
 			}	
 			printf("\n");
 			/* Select a event type */
-            printf("SELECT EVENT (1-FOOTBALL MATCH, 2-CONCERT, 3-EXPO): ");		
+            printf("SELECT EVENT (1-FOOTBALL MATCH, 2-CONCERT, 3-EXPO): \n");		
             scanf("%d",&selectEventType);
         
             printf("AVERAGE SPENDING: %.2f", averageSpendingByEvent(supporter, selectEventType));
 		}
 		else {
-            printf("NO DATA RECOVERED");
+            printf("NO SUPPORTER RECOVERED");
             return 0;
 		}
 		
